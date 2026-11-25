@@ -1,0 +1,170 @@
+
+=== nodes ===
+/imu_bridge
+/imu_filter
+
+=== topics ===
+/diagnostics [diagnostic_msgs/msg/DiagnosticArray]
+/imu/data [sensor_msgs/msg/Imu]
+/imu/data_raw [sensor_msgs/msg/Imu]
+/parameter_events [rcl_interfaces/msg/ParameterEvent]
+/rosout [rcl_interfaces/msg/Log]
+
+=== rate /imu/data_raw (8 s) ===
+average rate: 99.523
+	min: 0.009s max: 0.020s std dev: 0.00073s window: 200
+average rate: 98.040
+	min: 0.008s max: 0.021s std dev: 0.00144s window: 200
+
+=== rate /imu/data (8 s) ===
+	min: 0.006s max: 0.020s std dev: 0.00166s window: 200
+average rate: 98.523
+	min: 0.009s max: 0.020s std dev: 0.00127s window: 200
+failed to shutdown: rcl_shutdown already called on the given context, at ./src/rcl/init.c:333
+
+=== one /imu/data message ===
+header:
+  stamp:
+    sec: 1795611608
+    nanosec: 740151652
+  frame_id: imu_link
+orientation:
+  x: -7.371323973631109e-06
+  y: 0.021842521454349145
+  z: 1.610467239819134e-07
+  w: 0.9997614236417376
+orientation_covariance:
+- 0.0025000000000000005
+- 0.0
+- 0.0
+- 0.0
+- 0.0025000000000000005
+- 0.0
+- 0.0
+- 0.0
+- 1000000.0
+angular_velocity:
+  x: 0.0
+  y: 0.0
+  z: -0.013056661579804908
+angular_velocity_covariance:
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+linear_acceleration:
+  x: -0.9115922821044922
+  y: 0.0
+  z: 9.80665
+linear_acceleration_covariance:
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+- 0.0
+---
+
+=== one /diagnostics message ===
+header:
+  stamp:
+    sec: 1795611610
+    nanosec: 195453445
+  frame_id: ''
+status:
+- level: "\x01"
+  name: 'imu_bridge: serial link'
+  message: errors in the last period
+  hardware_id: simulated
+  values:
+  - key: connected
+    value: 'True'
+  - key: frame_rate_hz
+    value: '98.0'
+  - key: frames_ok
+    value: '2451'
+  - key: crc_errors
+    value: '23'
+  - key: lost_frames
+    value: '57'
+  - key: resyncs
+    value: '32'
+---
+
+=== QoS of /imu/data_raw ===
+Type: sensor_msgs/msg/Imu
+
+Publisher count: 1
+
+Node name: imu_bridge
+Node namespace: /
+Topic type: sensor_msgs/msg/Imu
+Topic type hash: RIHS01_7d9a00ff131080897a5ec7e26e315954b8eae3353c3f995c55faf71574000b5b
+Endpoint type: PUBLISHER
+GID: 01.0f.eb.7d.23.00.63.0b.00.00.00.00.00.00.13.03
+QoS profile:
+  Reliability: BEST_EFFORT
+  History (Depth): UNKNOWN
+  Durability: VOLATILE
+  Lifespan: Infinite
+  Deadline: Infinite
+  Liveliness: AUTOMATIC
+  Liveliness lease duration: Infinite
+
+Subscription count: 1
+
+Node name: imu_filter
+Node namespace: /
+Topic type: sensor_msgs/msg/Imu
+Topic type hash: RIHS01_7d9a00ff131080897a5ec7e26e315954b8eae3353c3f995c55faf71574000b5b
+Endpoint type: SUBSCRIPTION
+GID: 01.0f.eb.7d.24.00.7e.4f.00.00.00.00.00.00.14.04
+QoS profile:
+  Reliability: BEST_EFFORT
+  History (Depth): UNKNOWN
+  Durability: VOLATILE
+  Lifespan: Infinite
+  Deadline: Infinite
+  Liveliness: AUTOMATIC
+  Liveliness lease duration: Infinite
+
+
+=== rosbag (10 s) ===
+
+Files:             smoke_bag_0.mcap
+Bag size:          710.6 KiB
+Storage id:        mcap
+ROS Distro:        jazzy
+Duration:          9.681006588s
+Start:             Nov 25 2026 13:00:10.890532515 (1795611610.890532515)
+End:               Nov 25 2026 13:00:20.571539103 (1795611620.571539103)
+Messages:          1912
+Topic information: Topic: /diagnostics | Type: diagnostic_msgs/msg/DiagnosticArray | Count: 10 | Serialization Format: cdr
+                   Topic: /imu/data | Type: sensor_msgs/msg/Imu | Count: 951 | Serialization Format: cdr
+                   Topic: /imu/data_raw | Type: sensor_msgs/msg/Imu | Count: 951 | Serialization Format: cdr
+Service:           0
+Service information: 
+
+=== launch log (last lines) ===
+[INFO] [launch]: All log files can be found below /root/.ros/log/2026-11-25-12-59-44-768343-013696cdc6eb-29
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [bridge_node-1]: process started with pid [35]
+[INFO] [imu_filter_node-2]: process started with pid [36]
+[bridge_node-1] [INFO] [1795611585.127963857] [imu_bridge]: no port given: using the simulated source
+[imu_filter_node-2] [INFO] [1795611585.210212334] [imu_filter]: complementary filter: alpha=0.98, max_dt=0.5s; yaw is not estimated (no magnetometer)
+
+=== colcon test ===
+---------- generated xml file: /ws/build/serial_imu_bridge/pytest.xml ----------
+============================== 38 passed in 0.43s ==============================
+Finished <<< serial_imu_bridge [0.80s]
+
+Summary: 1 package finished [0.93s]
+Summary: 38 tests, 0 errors, 0 failures, 0 skipped
