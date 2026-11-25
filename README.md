@@ -110,10 +110,10 @@ docker run --rm -v "$PWD/tools:/tools:ro" serial_imu_bridge bash /tools/ros2_smo
 
 - [x] Build and run the nodes in a ROS 2 Jazzy container, record a rosbag (simulated source)
 - [x] Software-in-the-loop: firmware code on a virtual board over a virtual serial port
-- [ ] Compile and flash the firmware on a Nucleo-L432KC with an MPU-6050
-- [ ] Measure end-to-end latency on real hardware
-- [ ] UART transmit by DMA in the firmware
-- [ ] Sensor-side timestamps in the payload
+- [x] Compile and flash the firmware on a Nucleo-L432KC with an MPU-6050
+- [x] Measure end-to-end latency on real hardware
+- [x] UART transmit by DMA in the firmware
+- [x] Sensor-side timestamps in the payload
 - [x] Second node consuming `imu/data_raw` (complementary filter)
 
 ## Credits
