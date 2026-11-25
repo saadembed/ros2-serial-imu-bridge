@@ -53,7 +53,13 @@ def main():
 
     rclpy.init()
     node = Checker()
+    # Start the measurement window at the first message, not at process start:
+    # discovery can take a couple of seconds on a slow machine (seen in CI).
+    deadline = time.monotonic() + 10.0
+    while not node.samples and time.monotonic() < deadline:
+        rclpy.spin_once(node, timeout_sec=0.1)
     start = time.monotonic()
+    node.samples.clear()
     while time.monotonic() - start < args.seconds:
         rclpy.spin_once(node, timeout_sec=0.1)
     node.destroy_node()
