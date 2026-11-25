@@ -1,0 +1,27 @@
+﻿# Output of: python tools/benchmark_parser.py  (recorded 2026-11-25, 3 consecutive runs on the development PC)
+# Host-side parser throughput only; not a measurement of the robot, UART or ROS latency.
+
+python 3.12.10 (CPython), Windows 11, AMD64
+100000 IMU frames of 18 bytes, best of 5
+  one frame per feed()         71,383 frames/s  ( 14.01 us/frame)
+  64-byte reads                50,247 frames/s  ( 19.90 us/frame)
+  4096-byte reads              44,430 frames/s  ( 22.51 us/frame)
+  crc16_ccitt alone       29.88 us/frame (bitwise, no lookup table)
+  for scale: a 115200 baud 8N1 link carries at most 640 frames/s of this size
+
+python 3.12.10 (CPython), Windows 11, AMD64
+100000 IMU frames of 18 bytes, best of 5
+  one frame per feed()         66,292 frames/s  ( 15.08 us/frame)
+  64-byte reads                47,214 frames/s  ( 21.18 us/frame)
+  4096-byte reads              29,775 frames/s  ( 33.59 us/frame)
+  crc16_ccitt alone       27.92 us/frame (bitwise, no lookup table)
+  for scale: a 115200 baud 8N1 link carries at most 640 frames/s of this size
+
+python 3.12.10 (CPython), Windows 11, AMD64
+100000 IMU frames of 18 bytes, best of 5
+  one frame per feed()         71,730 frames/s  ( 13.94 us/frame)
+  64-byte reads                66,894 frames/s  ( 14.95 us/frame)
+  4096-byte reads              61,355 frames/s  ( 16.30 us/frame)
+  crc16_ccitt alone       13.74 us/frame (bitwise, no lookup table)
+  for scale: a 115200 baud 8N1 link carries at most 640 frames/s of this size
+

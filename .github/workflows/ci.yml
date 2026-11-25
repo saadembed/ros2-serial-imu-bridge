@@ -1,0 +1,40 @@
+name: ci
+
+on: [push, pull_request]
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pytest
+      - name: Frame, IMU, filter and simulator end-to-end tests (no ROS needed)
+        run: python -m pytest test -v
+      - name: Parser throughput on the CI runner (informational)
+        run: python tools/benchmark_parser.py --frames 20000
+
+  colcon-build:
+    runs-on: ubuntu-latest
+    container: ros:jazzy
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: src/serial_imu_bridge
+      - name: Install dependencies from package.xml (also checks the rosdep keys)
+        run: |
+          apt-get update
+          rosdep update --rosdistro jazzy
+          rosdep install --from-paths src --ignore-src -y --rosdistro jazzy
+      - name: Build
+        run: . /opt/ros/jazzy/setup.bash && colcon build --event-handlers console_direct+
+      - name: Test
+        run: |
+          . /opt/ros/jazzy/setup.bash
+          colcon test --event-handlers console_direct+
+          colcon test-result --verbose
