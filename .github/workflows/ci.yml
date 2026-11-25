@@ -38,3 +38,12 @@ jobs:
           . /opt/ros/jazzy/setup.bash
           colcon test --event-handlers console_direct+
           colcon test-result --verbose
+
+  sil-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the ROS 2 image
+        run: docker build -t serial_imu_bridge .
+      - name: Software-in-the-loop (virtual board -> virtual serial port -> ROS 2 nodes)
+        run: docker run --rm -v "$PWD/tools:/tools:ro" serial_imu_bridge bash /tools/sil_test.sh

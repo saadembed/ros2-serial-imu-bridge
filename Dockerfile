@@ -2,7 +2,7 @@
 FROM ros:jazzy
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        python3-serial python3-pytest \
+        python3-serial python3-pytest socat build-essential \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /ws

@@ -1,0 +1,44 @@
+
+=== build the virtual board from the firmware sources ===
+built /tmp/virtual_board
+
+=== phase 1: virtual board on a serial port, held at roll 20, pitch -10 ===
+messages on /imu/data: 796 in 8 s
+last diagnostics: {'connected': 'True', 'frame_rate_hz': '100.0', 'frames_ok': '1212', 'crc_errors': '0', 'lost_frames': '0', 'resyncs': '0', 'message': 'ok'}
+[PASS] rate 99.5 Hz within 10% of 100 Hz
+[PASS] roll 20.00 deg vs 20.00 deg
+[PASS] pitch -10.00 deg vs -10.00 deg
+[PASS] crc_errors = 0
+
+=== phase 2: unplug the virtual cable for 4 s ===
+- level: "\x02"
+  name: 'imu_bridge: serial link'
+  message: serial port not open
+  hardware_id: /tmp/ttyHOST
+--
+  - key: connected
+    value: 'False'
+
+=== phase 3: plug it back, the node must reconnect ===
+messages on /imu/data: 595 in 6 s
+last diagnostics: {'connected': 'True', 'frame_rate_hz': '100.0', 'frames_ok': '2209', 'crc_errors': '0', 'lost_frames': '0', 'resyncs': '0', 'message': 'ok'}
+[PASS] rate 99.2 Hz within 10% of 100 Hz
+[PASS] roll 20.00 deg vs 20.00 deg
+[PASS] pitch -10.00 deg vs -10.00 deg
+[PASS] crc_errors = 0
+
+=== bridge log: serial events ===
+[bridge_node-1] [INFO] [1795612060.047603186] [imu_bridge]: reading serial port /tmp/ttyHOST at 115200 baud
+[bridge_node-1] [ERROR] [1795612072.495004994] [imu_bridge]: serial port /tmp/ttyHOST failed: [Errno 5] Input/output error; reconnecting
+[bridge_node-1] [ERROR] [1795612072.500067731] [imu_bridge]: cannot open /tmp/ttyHOST at 115200 baud: [Errno 2] could not open port /tmp/ttyHOST: [Errno 2] No such file or directory: '/tmp/ttyHOST'; retrying
+[bridge_node-1] [INFO] [1795612078.520247301] [imu_bridge]: reading serial port /tmp/ttyHOST at 115200 baud
+[bridge_node-1] [ERROR] [1795612088.795159888] [imu_bridge]: serial port /tmp/ttyHOST failed: [Errno 5] Input/output error; reconnecting
+
+=== virtual board log ===
+virtual_board: /tmp/ttyMCU at 100 Hz, roll 20.0 deg, pitch -10.0 deg
+virtual_board: sent 1339 frames
+virtual_board: /tmp/ttyMCU at 100 Hz, roll 20.0 deg, pitch -10.0 deg
+virtual_board: sent 1040 frames
+
+=== result ===
+SIL test PASSED
